@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kunjar Builders & Developers | Premium Real Estate Bangalore</title>
+<meta name="description" content="Kunjar Builders — Premium land development & villas in Bangalore since 1999."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100vw;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#faf8f4;color:#1a1714;line-height:1.7}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;outline:none;background:none;font-family:inherit}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#b8935a;border-radius:99px}
+
+:root{
+  --ink:#1a1714;--paper:#faf8f4;--paper2:#f3f0ea;--linen:#e8e2d8;
+  --stone:#9a9086;--gold:#b8935a;--gold2:#d4aa72;--gold3:#7a5f38;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* grain */
+body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  opacity:.6;mix-blend-mode:multiply;pointer-events:none}
+
+/* cursor */
+.cur{position:fixed;width:9px;height:9px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply}
+.cur-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gold);pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease)}
+@media(pointer:coarse){.cur,.cur-ring{display:none}}
+
+/* ═══ NAV ═══ */
+#nav{position:fixed;top:0;left:0;width:100%;z-index:5000;height:68px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  transition:background .5s var(--ease),box-shadow .5s}
+#nav.solid{background:rgba(250,248,244,.95);backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--linen)}
+.nav-logo{display:flex;align-items:center;gap:11px}
+.logo-mark{width:36px;height:36px;border-radius:6px;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:20px;height:20px}
+.logo-txt b{font-family:'Playfair Display',serif;font-size:.98rem;font-weight:700;color:var(--ink);display:block;line-height:1.1}
+.logo-txt small{font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:500}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{padding:7px 14px;font-size:.73rem;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--stone);border-radius:5px;transition:color .25s,background .25s}
+.nav-links a:hover{color:var(--ink);background:rgba(0,0,0,.04)}
+.nav-pill{padding:9px 22px;border-radius:99px;background:var(--gold);color:#fff;
+  font-size:.73rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;
+  transition:all .3s var(--ease);box-shadow:0 3px 16px rgba(184,147,90,.35)}
+.nav-pill:hover{background:var(--gold3);transform:translateY(-1px)}
+.hbg{display:none;flex-direction:column;gap:5px;padding:6px;z-index:6000}
+.hbg span{display:block;height:1.5px;background:var(--ink);border-radius:2px;transition:all .4s var(--ease)}
+.hbg span:nth-child(1){width:24px}.hbg span:nth-child(2){width:17px}.hbg span:nth-child(3){width:24px}
+.hbg.x span:nth-child(1){transform:translateY(6.5px) rotate(45deg);width:22px}
+.hbg.x span:nth-child(2){opacity:0}
+.hbg.x span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);width:22px}
+#drawer{position:fixed;inset:0;z-index:4999;background:var(--paper);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;
+  clip-path:circle(0% at calc(100% - 42px) 34px);transition:clip-path .7s var(--ease);pointer-events:none}
+#drawer.open{clip-path:circle(160% at calc(100% - 42px) 34px);pointer-events:auto}
+.dl{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:700;
+  color:var(--ink);padding:6px 0;opacity:0;transform:translateY(20px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),color .2s}
+.dl:hover{color:var(--gold)}
+#drawer.open .dl{opacity:1;transform:none}
+#drawer.open .dl:nth-child(1){transition-delay:.12s}
+#drawer.open .dl:nth-child(2){transition-delay:.17s}
+#drawer.open .dl:nth-child(3){transition-delay:.22s}
+#drawer.open .dl:nth-child(4){transition-delay:.27s}
+#drawer.open .dl:nth-child(5){transition-delay:.32s}
+#drawer.open .dl:nth-child(6){transition-delay:.37s}
+.dl-foot{position:absolute;bottom:32px;font-size:.68rem;color:var(--stone);letter-spacing:2px;text-transform:uppercase}
+
+/* ═══ HERO ═══ */
+#hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;overflow:hidden}
+.h-left{display:flex;flex-direction:column;justify-content:flex-end;
+  padding:100px 6% 80px 5%;background:var(--paper);position:relative;z-index:2}
+.h-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.63rem;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:22px}
+.h-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,4.8vw,5.2rem);
+  font-weight:900;line-height:1.04;letter-spacing:-2.5px;color:var(--ink);margin-bottom:26px}
+.h1 .ln{display:block;overflow:hidden}
+.h1 .ln span{display:block;transform:translateY(110%);animation:up .85s var(--ease) forwards}
+.h1 .ln:nth-child(1) span{animation-delay:.08s}
+.h1 .ln:nth-child(2) span{animation-delay:.2s}
+.h1 .ln:nth-child(3) span{animation-delay:.32s}
+.h1 em{font-style:italic;color:var(--gold)}
+@keyframes up{to{transform:translateY(0)}}
+.h-sub{font-size:.88rem;color:var(--stone);line-height:1.85;max-width:360px;margin-bottom:36px;
+  opacity:0;animation:fi .7s var(--ease) .55s forwards}
+@keyframes fi{to{opacity:1}}
+.h-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fi .7s var(--ease) .7s forwards}
+.btn-dk{padding:13px 30px;background:var(--ink);color:#fff;border-radius:99px;
+  font-size:.76rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;transition:all .3s var(--ease)}
+.btn-dk:hover{background:var(--gold);transform:translateY(-2px)}
+.btn-gh{padding:12px 28px;border:1.5px solid var(--linen);color:var(--stone);border-radius:99px;
+  font-size:.76rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;transition:all .3s var(--ease)}
+.btn-gh:hover{border-color:var(--ink);color:var(--ink)}
+.h-right{position:relative;overflow:hidden;opacity:0;animation:fi .9s var(--ease) .28s forwards}
+.h-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transform:scale(1.1);animation:zo 9s var(--ease) forwards}
+@keyframes zo{to{transform:scale(1)}}
+.h-right::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(250,248,244,.3),transparent 60%)}
+.h-badge{position:absolute;bottom:32px;right:32px;z-index:3;
+  width:90px;height:90px;border-radius:50%;background:var(--gold);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  color:#fff;box-shadow:0 8px 28px rgba(184,147,90,.5);
+  animation:spin 20s linear infinite}
+.h-badge-in{animation:spin 20s linear infinite reverse;
+  display:flex;flex-direction:column;align-items:center}
+.h-badge b{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;line-height:1}
+.h-badge small{font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;line-height:1.3}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--stone);cursor:pointer;
+  opacity:0;animation:fi 1s var(--ease) 1.2s forwards}
+.sc-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scl 2s ease infinite}
+@keyframes scl{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* stats strip */
+.stats{display:flex;background:var(--ink);overflow:hidden}
+.st{flex:1;padding:28px 4%;border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;gap:5px;transition:background .35s}
+.st:last-child{border-right:none}
+.st:hover{background:rgba(255,255,255,.03)}
+.st-n{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:700;color:var(--gold);line-height:1}
+.st-l{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:3px}
+
+/* ═══ CHIPS & TYPOGRAPHY ═══ */
+.chip{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 5px;
+  background:rgba(184,147,90,.08);border:1px solid rgba(184,147,90,.18);border-radius:99px;
+  font-size:.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px}
+.chip i{width:20px;height:20px;background:var(--gold);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:.55rem}
+.chip.lite{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.45)}
+.chip.lite i{background:var(--gold)}
+.disp{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.6rem);
+  font-weight:700;line-height:1.1;letter-spacing:-1.5px;color:var(--ink)}
+.disp em{font-style:italic;color:var(--gold)}
+.disp.wh{color:#fff}.disp.wh em{color:var(--gold2)}
+.body-t{font-size:.87rem;color:var(--stone);line-height:1.85;max-width:460px}
+
+/* ═══ ABOUT ═══ */
+#about{padding:0;overflow:hidden}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;min-height:88vh}
+.about-pic{position:relative;overflow:hidden}
+.about-pic img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.about-pic:hover img{transform:scale(1.04)}
+.about-wedge{position:absolute;top:0;bottom:0;right:-1px;width:60px;
+  background:var(--paper);clip-path:polygon(50% 0,100% 0,100% 100%,0 100%)}
+.about-copy{padding:80px 8% 80px 10%;display:flex;flex-direction:column;justify-content:center;background:var(--paper)}
+.about-pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+.apill{padding:9px 16px;border-radius:8px;border:1px solid var(--linen);background:var(--paper2);
+  display:flex;align-items:center;gap:9px;font-size:.77rem;font-weight:500;color:var(--ink);
+  transition:all .3s var(--ease)}
+.apill:hover{border-color:var(--gold);background:rgba(184,147,90,.06);transform:translateY(-2px)}
+.apill i{color:var(--gold);font-size:.8rem;width:16px;text-align:center}
+.about-qt{margin-top:44px;padding:22px 26px;border-left:3px solid var(--gold);
+  background:var(--paper2);border-radius:0 10px 10px 0}
+.about-qt p{font-family:'Playfair Display',serif;font-size:.98rem;font-style:italic;color:var(--ink);line-height:1.6}
+.about-qt cite{display:block;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-top:10px;font-style:normal}
+
+/* ═══ PROJECTS ═══ */
+#projects{padding:90px 5%;background:var(--ink);overflow:hidden}
+.proj-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:16px}
+.vlink{font-size:.73rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold2);
+  display:inline-flex;align-items:center;gap:8px;font-weight:500;
+  border-bottom:1px solid rgba(212,170,114,.25);padding-bottom:2px;transition:gap .3s,border-color .3s}
+.vlink:hover{gap:14px;border-color:var(--gold2)}
+.proj-wrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;-ms-overflow-style:none;cursor:grab}
+.proj-wrap::-webkit-scrollbar{display:none}
+.proj-wrap:active{cursor:grabbing}
+.proj-row{display:flex;gap:22px;width:max-content;padding:6px 0 20px}
+.pc{width:320px;flex-shrink:0;border-radius:16px;overflow:hidden;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  transition:transform .4s var(--ease),box-shadow .4s}
+.pc:hover{transform:translateY(-10px);box-shadow:0 28px 60px rgba(0,0,0,.45)}
+.pc-img{position:relative;height:210px;overflow:hidden}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.pc:hover .pc-img img{transform:scale(1.08)}
+.pbadge{position:absolute;top:12px;left:12px;padding:4px 12px;border-radius:99px;
+  font-size:.63rem;font-weight:500;letter-spacing:1px;text-transform:uppercase}
+.ong{background:rgba(184,147,90,.22);color:#d4aa72;border:1px solid rgba(184,147,90,.3)}
+.cmp{background:rgba(80,180,120,.15);color:#7ddcaa;border:1px solid rgba(80,180,120,.25)}
+.pc-body{padding:20px}
+.pc-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:5px}
+.pc-loc{font-size:.73rem;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:5px;margin-bottom:14px}
+.pc-loc i{color:var(--gold2);font-size:.62rem}
+.pc-ft{display:flex;align-items:center;justify-content:space-between;
+  padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}
+.pc-price{font-size:.86rem;font-weight:500;color:var(--gold2);display:flex;align-items:center;gap:3px}
+.pc-type{font-size:.66rem;color:rgba(255,255,255,.28)}
+.drag-hint{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.22);font-size:.68rem;letter-spacing:1px;margin-top:6px}
+.drag-line{flex:1;height:1px;background:rgba(255,255,255,.07)}
+
+/* ═══ WHY ═══ */
+#why{padding:90px 5%;background:var(--paper2);overflow:hidden}
+.why-layout{display:grid;grid-template-columns:1fr 2fr;gap:80px;max-width:1300px;margin:0 auto;align-items:start}
+.why-sticky{position:sticky;top:100px}
+.why-g{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.wi{padding:26px;border-radius:14px;background:var(--paper);border:1px solid var(--linen);
+  position:relative;overflow:hidden;transition:all .4s var(--ease)}
+.wi::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,147,90,.06),transparent);opacity:0;transition:opacity .4s}
+.wi:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:rgba(184,147,90,.28)}
+.wi:hover::after{opacity:1}
+.wi-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(184,147,90,.1);line-height:1;margin-bottom:10px}
+.wi-i{width:42px;height:42px;border-radius:10px;background:rgba(184,147,90,.1);
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--gold);
+  margin-bottom:12px;transition:background .3s,color .3s}
+.wi:hover .wi-i{background:var(--gold);color:#fff}
+.wi h3{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:7px}
+.wi p{font-size:.77rem;color:var(--stone);line-height:1.7}
+
+/* ═══ SHOWCASE ═══ */
+#showcase{position:relative;height:500px;overflow:hidden;display:flex;align-items:center}
+.shbg{position:absolute;inset:-60px;
+  background-image:url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1800&auto=format&fit=crop&q=80');
+  background-size:cover;background-position:center;background-attachment:fixed}
+.shveil{position:absolute;inset:0;background:linear-gradient(to right,rgba(26,23,20,.84) 35%,rgba(26,23,20,.32) 100%)}
+.sh-txt{position:relative;z-index:2;padding:0 8%}
+.sh-txt h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,4rem);
+  font-weight:900;color:#fff;line-height:1.06;letter-spacing:-2px;margin-bottom:20px}
+.sh-txt h2 em{font-style:italic;color:var(--gold2)}
+.sh-txt p{font-size:.87rem;color:rgba(255,255,255,.55);max-width:380px;line-height:1.85;margin-bottom:32px}
+.btn-og{padding:12px 30px;border:1.5px solid var(--gold);color:var(--gold);border-radius:99px;
+  font-size:.75rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;
+  display:inline-block;transition:all .3s var(--ease)}
+.btn-og:hover{background:var(--gold);color:#fff;transform:translateY(-2px)}
+
+/* ═══ LEADERSHIP ═══ */
+#leadership{padding:90px 5%;background:var(--paper);overflow:hidden}
+.lead-hd{text-align:center;margin-bottom:60px}
+.lead-hd .disp{margin:14px 0}
+.lead-quote{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.2vw,1.4rem);
+  font-style:italic;color:var(--stone);max-width:580px;margin:0 auto;line-height:1.55}
+.lead-quote strong{color:var(--ink);font-style:normal}
+.leads{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1300px;margin:0 auto}
+.lc{border-radius:14px;overflow:hidden;background:var(--paper2);border:1px solid var(--linen);
+  transition:all .4s var(--ease)}
+.lc:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.1);border-color:rgba(184,147,90,.28)}
+.lc-img{position:relative;height:250px;overflow:hidden}
+.lc-img img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s var(--ease)}
+.lc:hover .lc-img img{transform:scale(1.05)}
+.lc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,23,20,.7) 0%,transparent 55%);
+  display:flex;align-items:flex-end;padding:16px;opacity:0;transition:opacity .4s}
+.lc:hover .lc-ov{opacity:1}
+.lc-ov a{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.78rem;transition:background .3s}
+.lc-ov a:hover{background:var(--gold)}
+.lc-bio{padding:18px}
+.lc-name{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;color:var(--ink)}
+.lc-role{font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin:4px 0 8px;font-weight:500}
+.lc-desc{font-size:.75rem;color:var(--stone);line-height:1.65}
+
+/* ═══ GALLERY ═══ */
+#gallery{padding:90px 5%;background:var(--paper2);overflow:hidden}
+.gal-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;flex-wrap:wrap;gap:16px}
+.gal-g{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:230px;gap:12px;max-width:1300px;margin:0 auto}
+.gi{border-radius:11px;overflow:hidden;cursor:zoom-in;position:relative}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.gi:hover img{transform:scale(1.07)}
+.gi-ov{position:absolute;inset:0;background:rgba(26,23,20,.38);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s}
+.gi:hover .gi-ov{opacity:1}
+.gi-ov i{color:#fff;font-size:1.3rem}
+.gi:nth-child(1){grid-column:span 5}
+.gi:nth-child(2){grid-column:span 4}
+.gi:nth-child(3){grid-column:span 3}
+.gi:nth-child(4){grid-column:span 3}
+.gi:nth-child(5){grid-column:span 5}
+.gi:nth-child(6){grid-column:span 4}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.94);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center}
+.lb.on{display:flex}
+.lb img{max-width:90vw;max-height:88vh;border-radius:10px;object-fit:contain}
+.lb-x{position:absolute;top:18px;right:22px;color:#fff;font-size:1.5rem;cursor:pointer;
+  background:none;border:none;transition:transform .3s,color .3s}
+.lb-x:hover{transform:rotate(90deg);color:var(--gold)}
+
+/* ═══ TESTIMONIALS ═══ */
+#testi{padding:90px 5%;background:var(--ink);overflow:hidden}
+.testi-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:16px}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1300px;margin:0 auto}
+.tc{padding:30px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  position:relative;transition:all .4s var(--ease)}
+.tc:hover{background:rgba(255,255,255,.07);transform:translateY(-4px)}
+.tc-q{font-family:'Playfair Display',serif;font-size:3.5rem;color:rgba(184,147,90,.14);line-height:.8;margin-bottom:14px}
+.tc-stars{color:var(--gold2);font-size:.8rem;letter-spacing:2px;margin-bottom:16px}
+.tc-txt{font-size:.83rem;color:rgba(255,255,255,.5);line-height:1.85;font-style:italic;margin-bottom:22px}
+.tc-auth{display:flex;align-items:center;gap:11px}
+.tc-av{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(184,147,90,.3)}
+.tc-name{font-size:.82rem;font-weight:600;color:#fff}
+.tc-place{font-size:.68rem;color:rgba(255,255,255,.28)}
+
+/* ═══ FAQ ═══ */
+#faq{padding:90px 5%;background:var(--paper);overflow:hidden}
+.faq-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;max-width:1300px;margin:0 auto;align-items:start}
+.faq-l{position:sticky;top:100px}
+.faq-l .disp{margin:14px 0 16px}
+.faq-l p{font-size:.84rem;color:var(--stone);line-height:1.8}
+.faq-r{display:flex;flex-direction:column;gap:11px}
+.faq-c{border-radius:11px;border:1px solid var(--linen);background:var(--paper2);overflow:hidden;transition:border-color .3s}
+.faq-c.on{border-color:rgba(184,147,90,.32);background:var(--paper)}
+.faq-t{width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;font-size:.86rem;font-weight:500;color:var(--ink);text-align:left;
+  cursor:pointer;gap:14px;user-select:none;background:none;border:none;font-family:'DM Sans',sans-serif}
+.faq-arr{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--linen);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:var(--stone);font-size:.68rem;transition:all .3s var(--ease)}
+.faq-c.on .faq-arr{background:var(--gold);border-color:var(--gold);color:#fff;transform:rotate(45deg)}
+.faq-b{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.faq-bi{padding:0 22px 18px;font-size:.8rem;color:var(--stone);line-height:1.85;
+  border-top:1px solid var(--linen);padding-top:12px}
+
+/* ═══ CONTACT ═══ */
+#contact{padding:90px 5%;background:var(--paper2);overflow:hidden}
+.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;max-width:1300px;margin:0 auto;align-items:start}
+.ci-rows{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+.ci-row{display:flex;align-items:flex-start;gap:13px;padding:14px;border-radius:10px;
+  background:var(--paper);border:1px solid var(--linen);transition:border-color .3s}
+.ci-row:hover{border-color:rgba(184,147,90,.28)}
+.ci-ico{width:38px;height:38px;border-radius:8px;flex-shrink:0;
+  background:rgba(184,147,90,.1);display:flex;align-items:center;justify-content:center;font-size:.88rem;color:var(--gold)}
+.ci-t h4{font-size:.74rem;font-weight:600;color:var(--ink);margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px}
+.ci-t p,.ci-t a{font-size:.78rem;color:var(--stone);line-height:1.6;transition:color .2s}
+.ci-t a:hover{color:var(--gold)}
+.map-box{border-radius:11px;overflow:hidden;height:190px;border:1px solid var(--linen)}
+.map-box iframe{width:100%;height:100%;border:none;display:block}
+.cform{background:var(--paper);border-radius:18px;padding:38px;border:1px solid var(--linen);
+  box-shadow:0 16px 50px rgba(0,0,0,.06)}
+.cform h3{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--ink);margin-bottom:26px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fg label{font-size:.68rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--stone)}
+.fg input,.fg textarea,.fg select{
+  padding:12px 15px;border:1.5px solid var(--linen);border-radius:9px;
+  font-family:'DM Sans',sans-serif;font-size:.84rem;color:var(--ink);
+  background:var(--paper2);transition:all .3s;outline:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(184,147,90,.1)}
+.fg textarea{resize:vertical;min-height:115px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.btn-sub{width:100%;padding:14px;background:var(--ink);color:#fff;border-radius:11px;
+  font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;
+  transition:all .35s var(--ease)}
+.btn-sub:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,147,90,.35)}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--ink);padding:60px 5% 24px;overflow:hidden}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:46px;max-width:1300px;
+  margin:0 auto 44px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.07)}
+.fb-name{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.fb-name .logo-mark{width:32px;height:32px;border-radius:5px}
+.fb-name .logo-mark svg{width:17px;height:17px}
+.fb-name span{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff}
+footer p{font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.8;max-width:260px}
+.fsoc{display:flex;gap:8px;margin-top:20px}
+.fsoc a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);
+  font-size:.78rem;transition:all .3s}
+.fsoc a:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.fcol h4{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:16px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol ul a{font-size:.76rem;color:rgba(255,255,255,.35);transition:all .2s;display:inline-block}
+.fcol ul a:hover{color:var(--gold);padding-left:5px}
+.fci{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px;font-size:.74rem;color:rgba(255,255,255,.35)}
+.fci i{color:var(--gold);margin-top:3px;min-width:12px;font-size:.72rem}
+.fb-bottom{max-width:1300px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.7rem;color:rgba(255,255,255,.22)}
+
+/* ═══ FABS ═══ */
+.fabs{position:fixed;bottom:24px;right:24px;z-index:4900;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-wa{width:52px;height:52px;border-radius:50%;background:#25d366;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;
+  box-shadow:0 4px 18px rgba(37,211,102,.4);transition:all .3s var(--ease)}
+.fab-wa:hover{transform:scale(1.1);background:#1da851}
+.fab-up{width:42px;height:42px;border-radius:50%;background:var(--paper);
+  border:1.5px solid var(--linen);box-shadow:0 4px 16px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.82rem;cursor:pointer;
+  opacity:0;pointer-events:none;transition:all .4s var(--ease)}
+.fab-up.show{opacity:1;pointer-events:auto}
+.fab-up:hover{background:var(--gold);color:#fff;transform:translateY(-2px)}
+
+/* ═══ REVEAL ═══ */
+[data-r]{opacity:0;transform:translateY(32px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+[data-r].in{opacity:1;transform:none}
+[data-r="l"]{transform:translateX(-36px)}
+[data-r="l"].in{transform:none}
+[data-r="r"]{transform:translateX(36px)}
+[data-r="r"].in{transform:none}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1100px){
+  .about-grid{grid-template-columns:1fr}
+  .about-pic{height:340px}
+  .about-wedge{display:none}
+  .about-copy{padding:56px 5%}
+  .why-layout{grid-template-columns:1fr}
+  .why-sticky{position:relative;top:0}
+  .leads{grid-template-columns:repeat(2,1fr)}
+  .ft{grid-template-columns:1fr 1fr;gap:30px}
+  .ft .footer-brand{grid-column:span 2}
+}
+@media(max-width:860px){
+  #hero{grid-template-columns:1fr;min-height:auto}
+  .h-left{padding:100px 5% 50px}
+  .h-right{height:260px}
+  .h-badge{width:70px;height:70px;bottom:16px;right:16px}
+  .h-badge b{font-size:1.1rem}
+  .nav-links{display:none}
+  .hbg{display:flex}
+  .tg{grid-template-columns:1fr}
+  .faq-layout{grid-template-columns:1fr}
+  .faq-l{position:relative;top:0}
+  .contact-layout{grid-template-columns:1fr}
+  .gal-g{grid-template-columns:1fr 1fr;grid-auto-rows:200px}
+  .gi:nth-child(n){grid-column:span 1}
+  .gi:nth-child(1),.gi:nth-child(5){grid-column:span 2}
+  .proj-hd{flex-direction:column;align-items:flex-start}
+  .stats{flex-wrap:wrap}
+  .st{flex:1 1 45%;border-bottom:1px solid rgba(255,255,255,.06)}
+}
+@media(max-width:560px){
+  .why-g{grid-template-columns:1fr}
+  .leads{grid-template-columns:1fr}
+  .tg{grid-template-columns:1fr}
+  .fg-row{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr}
+  .ft .footer-brand{grid-column:span 1}
+  .gal-g{grid-template-columns:1fr;grid-auto-rows:200px}
+  .gi:nth-child(n){grid-column:span 1}
+  .stats{flex-direction:column}
+  .st{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">
+      <svg viewBox="0 0 22 22" fill="none"><path d="M11 2L3 8v12h5v-6h6v6h5V8L11 2z" fill="#b8935a"/></svg>
+    </div>
+    <div class="logo-txt"><b>Kunjar Builders</b><small>Est. 1999 · Bangalore</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="#contact" class="nav-pill">Contact</a>
+    <button class="hbg" id="hbg" aria-label="menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div id="drawer">
+  <a href="#about" class="dl">About</a>
+  <a href="#projects" class="dl">Projects</a>
+  <a href="#gallery" class="dl">Gallery</a>
+  <a href="#leadership" class="dl">Leadership</a>
+  <a href="#faq" class="dl">FAQ</a>
+  <a href="#contact" class="dl">Contact</a>
+  <span class="dl-foot">Kunjar Builders · Bangalore · Est. 1999</span>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="h-left">
+    <div class="h-eyebrow">Bangalore's Finest Since 1999</div>
+    <h1 class="h1">
+      <span class="ln"><span>Premium</span></span>
+      <span class="ln"><span>Land &amp; <em>Villa</em></span></span>
+      <span class="ln"><span>Developments</span></span>
+    </h1>
+    <p class="h-sub">Building trust and lasting value across Bangalore's finest corridors — one home at a time.</p>
+    <div class="h-btns">
+      <a href="#projects" class="btn-dk"><i class="fa-solid fa-layer-group"></i>View Projects</a>
+      <a href="#contact" class="btn-gh"><i class="fa-regular fa-envelope"></i>Contact Us</a>
+    </div>
+  </div>
+  <div class="h-right">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop&q=85" alt="Premium villa Bangalore" loading="eager"/>
+    <div class="h-badge">
+      <div class="h-badge-in"><b>25+</b><small>Years of Trust</small></div>
+    </div>
+  </div>
+  <div class="scroll-cue" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
+    <div class="sc-line"></div><span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats" id="stats">
+  <div class="st" data-r><div class="st-n" data-count="25" data-sfx="+">25+</div><div class="st-l">Years of Excellence</div></div>
+  <div class="st" data-r><div class="st-n" data-count="120" data-sfx="+">120+</div><div class="st-l">Projects Delivered</div></div>
+  <div class="st" data-r><div class="st-n" data-count="2500" data-sfx="+">2500+</div><div class="st-l">Happy Families</div></div>
+  <div class="st" data-r><div class="st-n" data-count="100" data-sfx="%">100%</div><div class="st-l">Legal Clarity</div></div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-pic">
+      <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop&q=80" alt="Kunjar project" loading="lazy"/>
+      <div class="about-wedge"></div>
+    </div>
+    <div class="about-copy">
+      <div class="chip" data-r><i class="fa-solid fa-building"></i>Our Story</div>
+      <h2 class="disp" data-r>Built on <em>Trust,</em><br>Driven by Vision</h2>
+      <p class="body-t" data-r style="margin-top:16px">Since 1999, Kunjar Builders and Developers Pvt. Ltd. has shaped Bangalore's finest residential landscapes. From premium plotted developments to luxurious villa communities, we deliver spaces that stand as a testament to quality, transparency, and enduring value.</p>
+      <div class="about-pills" data-r>
+        <div class="apill"><i class="fa-solid fa-award"></i>25+ Years Legacy</div>
+        <div class="apill"><i class="fa-solid fa-handshake"></i>Trusted Partnerships</div>
+        <div class="apill"><i class="fa-solid fa-lightbulb"></i>Modern Designs</div>
+        <div class="apill"><i class="fa-solid fa-shield-halved"></i>100% Legal Assured</div>
+        <div class="apill"><i class="fa-solid fa-map-location-dot"></i>Prime Locations</div>
+        <div class="apill"><i class="fa-solid fa-headset"></i>Lifetime Support</div>
+      </div>
+      <div class="about-qt" data-r>
+        <p>"We don't just sell properties — we build lasting relationships with every family we serve."</p>
+        <cite>— Founding Philosophy, Kunjar Builders</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="proj-hd">
+    <div>
+      <div class="chip lite" data-r><i class="fa-solid fa-city"></i>Portfolio</div>
+      <h2 class="disp wh" data-r>Our <em>Projects</em></h2>
+    </div>
+    <a href="#contact" class="vlink" data-r>View All <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+  <div class="proj-wrap" id="pw">
+    <div class="proj-row" id="pr">
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge ong">Ongoing</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Celestia</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Whitefield, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>85L – 1.4Cr</div><div class="pc-type">3 & 4 BHK Villas</div></div></div>
+      </div>
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge cmp">Completed</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Royale</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Sarjapur Road, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>60L – 95L</div><div class="pc-type">Premium Plots</div></div></div>
+      </div>
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge ong">Ongoing</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Serene</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Devanahalli, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>45L – 80L</div><div class="pc-type">Gated Plots</div></div></div>
+      </div>
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge cmp">Completed</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Heights</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Electronic City, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>55L – 1.2Cr</div><div class="pc-type">Luxury Villas</div></div></div>
+      </div>
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge cmp">Completed</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Grand</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Yelahanka, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>70L – 1.1Cr</div><div class="pc-type">Premium Villas</div></div></div>
+      </div>
+      <div class="pc">
+        <div class="pc-img"><img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&auto=format&fit=crop&q=80" alt="" loading="lazy"/><span class="pbadge ong">Ongoing</span></div>
+        <div class="pc-body"><div class="pc-name">Kunjar Meadows</div><div class="pc-loc"><i class="fa-solid fa-location-dot"></i>Hosur Road, Bangalore</div><div class="pc-ft"><div class="pc-price"><i class="fa-solid fa-indian-rupee-sign"></i>38L – 72L</div><div class="pc-type">Plotted Development</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="drag-hint"><div class="drag-line"></div><span>Drag or swipe to explore</span><div class="drag-line"></div></div>
+</section>
+
+<!-- ═══ WHY ═══ -->
+<section id="why">
+  <div class="why-layout">
+    <div class="why-sticky">
+      <div class="chip" data-r><i class="fa-solid fa-star"></i>Why Kunjar</div>
+      <h2 class="disp" data-r>Why Families<br><em>Trust Us</em></h2>
+      <p class="body-t" data-r style="margin-top:16px">We don't just sell properties — we build lasting relationships. 25 years of trust speaks for itself.</p>
+    </div>
+    <div class="why-g">
+      <div class="wi" data-r><div class="wi-n">01</div><div class="wi-i"><i class="fa-solid fa-certificate"></i></div><h3>Trusted Since 1999</h3><p>25+ years of flawless delivery across Bangalore's fastest-growing corridors.</p></div>
+      <div class="wi" data-r><div class="wi-n">02</div><div class="wi-i"><i class="fa-solid fa-map-location-dot"></i></div><h3>Prime Locations</h3><p>Strategically chosen parcels near IT hubs, schools, hospitals, and highways.</p></div>
+      <div class="wi" data-r><div class="wi-n">03</div><div class="wi-i"><i class="fa-solid fa-helmet-safety"></i></div><h3>Quality Construction</h3><p>Only Grade-A materials and vetted architects with proven track records.</p></div>
+      <div class="wi" data-r><div class="wi-n">04</div><div class="wi-i"><i class="fa-solid fa-file-contract"></i></div><h3>Transparent Deals</h3><p>Zero hidden costs. Every term discussed, documented, and disclosed upfront.</p></div>
+      <div class="wi" data-r><div class="wi-n">05</div><div class="wi-i"><i class="fa-solid fa-gavel"></i></div><h3>Legal Assurance</h3><p>RERA compliant with full title clearance and complete documentation support.</p></div>
+      <div class="wi" data-r><div class="wi-n">06</div><div class="wi-i"><i class="fa-solid fa-headset"></i></div><h3>Lifetime Support</h3><p>Dedicated after-sales team ensures your journey with us never truly ends.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SHOWCASE ═══ -->
+<section id="showcase">
+  <div class="shbg"></div><div class="shveil"></div>
+  <div class="sh-txt" data-r="l">
+    <div class="chip" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.55)"><i class="fa-solid fa-home" style="background:var(--gold)"></i>Premium Living</div>
+    <h2>Experience<br><em>Premium</em> Living</h2>
+    <p>Where architecture meets aspiration — crafted for those who value the finest.</p>
+    <a href="#contact" class="btn-og">Schedule a Site Visit</a>
+  </div>
+</section>
+
+<!-- ═══ LEADERSHIP ═══ -->
+<section id="leadership">
+  <div class="lead-hd" data-r>
+    <div class="chip" style="justify-content:center"><i class="fa-solid fa-users"></i>Our Leaders</div>
+    <h2 class="disp" style="text-align:center">Meet Our <em>Leadership</em></h2>
+    <p class="lead-quote">"<strong>We build trust along with homes.</strong> Every project reflects not just our craft, but our commitment to every family."</p>
+  </div>
+  <div class="leads">
+    <div class="lc" data-r><div class="lc-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format&fit=crop&q=80" alt=""/><div class="lc-ov"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></div></div><div class="lc-bio"><div class="lc-name">Rajesh Kumar</div><div class="lc-role">Founder & Chairman</div><p class="lc-desc">Visionary leader who built Kunjar from the ground up with 25+ years of real estate mastery.</p></div></div>
+    <div class="lc" data-r><div class="lc-img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80" alt=""/><div class="lc-ov"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></div></div><div class="lc-bio"><div class="lc-name">Priya Sharma</div><div class="lc-role">Managing Director</div><p class="lc-desc">Steers strategy and operations with sharp focus on customer satisfaction and growth.</p></div></div>
+    <div class="lc" data-r><div class="lc-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" alt=""/><div class="lc-ov"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></div></div><div class="lc-bio"><div class="lc-name">Anil Verma</div><div class="lc-role">Director – Projects</div><p class="lc-desc">Oversees every build from foundation to finishing with an engineer's precision.</p></div></div>
+    <div class="lc" data-r><div class="lc-img"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80" alt=""/><div class="lc-ov"><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></div></div><div class="lc-bio"><div class="lc-name">Sunita Rao</div><div class="lc-role">Head – Legal & Compliance</div><p class="lc-desc">Ensures every transaction is backed by airtight documentation and zero ambiguity.</p></div></div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery">
+  <div class="gal-hd">
+    <div>
+      <div class="chip" data-r><i class="fa-solid fa-images"></i>Gallery</div>
+      <h2 class="disp" data-r>Our Work in <em>Pictures</em></h2>
+    </div>
+    <a href="#contact" class="vlink" style="color:var(--gold);border-color:rgba(184,147,90,.25)" data-r>More Photos <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+  <div class="gal-g">
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+    <div class="gi" data-r onclick="openLb('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="" loading="lazy"/><div class="gi-ov"><i class="fa-solid fa-expand"></i></div></div>
+  </div>
+</section>
+<div class="lb" id="lb" onclick="closeLb()"><button class="lb-x" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button><img id="lbImg" src="" alt=""/></div>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testi">
+  <div class="testi-hd">
+    <div>
+      <div class="chip lite" data-r><i class="fa-solid fa-comments"></i>Reviews</div>
+      <h2 class="disp wh" data-r>What Families <em>Say</em></h2>
+    </div>
+  </div>
+  <div class="tg">
+    <div class="tc" data-r><div class="tc-q">"</div><div class="tc-stars">★★★★★</div><p class="tc-txt">Investing in Kunjar Celestia was the best financial decision of my life. Transparent at every step and the construction quality is outstanding.</p><div class="tc-auth"><img class="tc-av" src="https://i.pravatar.cc/100?img=11" alt=""/><div><div class="tc-name">Ravi Shankar</div><div class="tc-place">Whitefield, Bangalore</div></div></div></div>
+    <div class="tc" data-r><div class="tc-q">"</div><div class="tc-stars">★★★★★</div><p class="tc-txt">Honest, professional, and extremely responsive. Kunjar handled all legal paperwork seamlessly. I felt completely at ease throughout the purchase.</p><div class="tc-auth"><img class="tc-av" src="https://i.pravatar.cc/100?img=5" alt=""/><div><div class="tc-name">Meena Krishnan</div><div class="tc-place">Sarjapur, Bangalore</div></div></div></div>
+    <div class="tc" data-r><div class="tc-q">"</div><div class="tc-stars">★★★★☆</div><p class="tc-txt">Wonderful experience from site visit to registration. The team answered all questions patiently. Highly recommend Kunjar to anyone looking in Bangalore.</p><div class="tc-auth"><img class="tc-av" src="https://i.pravatar.cc/100?img=33" alt=""/><div><div class="tc-name">Arjun Nair</div><div class="tc-place">Yelahanka, Bangalore</div></div></div></div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+  <div class="faq-layout">
+    <div class="faq-l">
+      <div class="chip" data-r><i class="fa-solid fa-circle-question"></i>FAQ</div>
+      <h2 class="disp" data-r>Common <em>Questions</em></h2>
+      <p data-r>Can't find your answer? Reach out directly — our team is happy to help.</p>
+      <a href="#contact" class="btn-dk" data-r style="display:inline-flex;margin-top:26px;font-size:.73rem"><i class="fa-solid fa-envelope"></i>Ask Us Directly</a>
+    </div>
+    <div class="faq-r">
+      <div class="faq-c"><button class="faq-t">What types of properties do you offer?<span class="faq-arr"><i class="fa-solid fa-plus"></i></span></button><div class="faq-b"><div class="faq-bi">We offer premium plotted developments, gated villa communities, and independent luxury villas across Bangalore. Our portfolio covers various budget ranges — from affordable residential plots to ultra-premium villa townships.</div></div></div>
+      <div class="faq-c"><button class="faq-t">Where are your projects located?<span class="faq-arr"><i class="fa-solid fa-plus"></i></span></button><div class="faq-b"><div class="faq-bi">Our projects span Bangalore's key growth corridors — Whitefield, Sarjapur Road, Electronic City, Devanahalli, Yelahanka, and Hosur Road. Each location is selected for its infrastructure, connectivity, and long-term appreciation potential.</div></div></div>
+      <div class="faq-c"><button class="faq-t">How can I book a property?<span class="faq-arr"><i class="fa-solid fa-plus"></i></span></button><div class="faq-b"><div class="faq-bi">Start by filling out our contact form or calling us directly. Our team will schedule a complimentary site visit. After the visit, we guide you through plot selection, payment plans, and registration — every step explained clearly.</div></div></div>
+      <div class="faq-c"><button class="faq-t">Do you provide legal assistance?<span class="faq-arr"><i class="fa-solid fa-plus"></i></span></button><div class="faq-b"><div class="faq-bi">Yes, absolutely. Our in-house legal team handles title verification, encumbrance certificates, RERA compliance, and registration. All projects come with complete documentation and zero legal ambiguity.</div></div></div>
+      <div class="faq-c"><button class="faq-t">Are there flexible payment options?<span class="faq-arr"><i class="fa-solid fa-plus"></i></span></button><div class="faq-b"><div class="faq-bi">Yes. We offer customised payment plans including construction-linked plans, flexi-EMI options, and bank loan tie-ups with leading financial institutions. Our team will find the most suitable arrangement for you.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div style="text-align:center;max-width:560px;margin:0 auto 52px">
+    <div class="chip" data-r style="justify-content:center"><i class="fa-solid fa-phone"></i>Get In Touch</div>
+    <h2 class="disp" data-r>Let's Find Your <em>Dream Home</em></h2>
+  </div>
+  <div class="contact-layout">
+    <div data-r="l">
+      <div class="ci-rows">
+        <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-location-dot"></i></div><div class="ci-t"><h4>Office</h4><p>#42, 3rd Floor, MG Road<br>Bangalore – 560 001, Karnataka</p></div></div>
+        <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-phone"></i></div><div class="ci-t"><h4>Phone</h4><a href="tel:+919876543210">+91 98765 43210</a><br><a href="tel:+918022334455">+91 80 2233 4455</a></div></div>
+        <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-envelope"></i></div><div class="ci-t"><h4>Email</h4><a href="mailto:info@kunjarbuilders.com">info@kunjarbuilders.com</a><br><a href="mailto:sales@kunjarbuilders.com">sales@kunjarbuilders.com</a></div></div>
+        <div class="ci-row"><div class="ci-ico"><i class="fa-solid fa-clock"></i></div><div class="ci-t"><h4>Hours</h4><p>Mon – Sat: 9AM – 7PM<br>Sunday: 10AM – 4PM</p></div></div>
+      </div>
+      <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9857527097677!2d77.6074!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sMG%20Road%2C%20Bengaluru!5e0!3m2!1sen!2sin!4v1718000000000" allowfullscreen="" loading="lazy"></iframe></div>
+    </div>
+    <div class="cform" data-r="r">
+      <h3>Send a Message</h3>
+      <div class="fg-row">
+        <div class="fg"><label>Name</label><input type="text" placeholder="Your full name"/></div>
+        <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 43210"/></div>
+      </div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com"/></div>
+      <div class="fg"><label>Interested In</label>
+        <select><option value="">Select a project…</option><option>Kunjar Celestia – Whitefield</option><option>Kunjar Royale – Sarjapur</option><option>Kunjar Serene – Devanahalli</option><option>Kunjar Heights – Electronic City</option><option>Other / General Enquiry</option></select>
+      </div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell us what you're looking for…"></textarea></div>
+      <button class="btn-sub" id="subBtn" onclick="handleSub()"><i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft">
+    <div class="footer-brand">
+      <div class="fb-name"><div class="logo-mark"><svg viewBox="0 0 22 22" fill="none"><path d="M11 2L3 8v12h5v-6h6v6h5V8L11 2z" fill="#b8935a"/></svg></div><span>Kunjar Builders &amp; Developers</span></div>
+      <p>Premium real estate development in Bangalore since 1999. Building trust, value, and lasting homes across the city's finest locations.</p>
+      <div class="fsoc">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="fcol"><h4>Navigate</h4><ul><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Projects</h4><ul><li><a href="#">Kunjar Celestia</a></li><li><a href="#">Kunjar Royale</a></li><li><a href="#">Kunjar Serene</a></li><li><a href="#">Kunjar Heights</a></li><li><a href="#">Kunjar Grand</a></li><li><a href="#">Kunjar Meadows</a></li></ul></div>
+    <div class="fcol"><h4>Contact</h4>
+      <div class="fci"><i class="fa-solid fa-location-dot"></i><span>#42, MG Road, Bangalore – 560 001</span></div>
+      <div class="fci"><i class="fa-solid fa-phone"></i><a href="tel:+919876543210" style="color:inherit">+91 98765 43210</a></div>
+      <div class="fci"><i class="fa-solid fa-envelope"></i><a href="mailto:info@kunjarbuilders.com" style="color:inherit">info@kunjarbuilders.com</a></div>
+      <div class="fci"><i class="fa-solid fa-clock"></i><span>Mon–Sat 9AM – 7PM</span></div>
+    </div>
+  </div>
+  <div class="fb-bottom">
+    <span>© 2024 Kunjar Builders and Developers Pvt. Ltd. All rights reserved.</span>
+    <span>RERA Reg. No.: PRM/KA/RERA/2024/XXXX</span>
+  </div>
+</footer>
+
+<!-- FABs -->
+<div class="fabs">
+  <a href="https://wa.me/919876543210?text=Hi%2C%20I%27m%20interested%20in%20Kunjar%20properties" target="_blank" class="fab-wa"><i class="fa-brands fa-whatsapp"></i></a>
+  <div class="fab-up" id="fabUp" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-arrow-up"></i></div>
+</div>
+
+<script>
+/* prevent horizontal scroll hard lock */
+(function(){document.documentElement.style.overflowX='hidden';document.body.style.overflowX='hidden'})();
+
+/* cursor */
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+if(cur&&ring&&window.matchMedia('(pointer:fine)').matches){
+  let mx=0,my=0,rx=0,ry=0;
+  window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+  document.querySelectorAll('a,button,.pc,.lc,.gi,.faq-t').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.width='58px';ring.style.height='58px';ring.style.opacity='.45'});
+    el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='1'});
+  });
+}
+
+/* nav solid */
+const nav=document.getElementById('nav'),fabUp=document.getElementById('fabUp');
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  nav.classList.toggle('solid',y>60);
+  fabUp.classList.toggle('show',y>400);
+},{passive:true});
+
+/* hamburger */
+const hbg=document.getElementById('hbg'),drawer=document.getElementById('drawer');
+hbg.addEventListener('click',()=>{
+  hbg.classList.toggle('x');drawer.classList.toggle('open');
+  document.body.style.overflow=drawer.classList.contains('open')?'hidden':'';
+});
+drawer.querySelectorAll('.dl').forEach(l=>l.addEventListener('click',()=>{
+  hbg.classList.remove('x');drawer.classList.remove('open');document.body.style.overflow='';
+}));
+
+/* smooth anchor */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+
+/* reveal */
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+
+/* counter */
+function animN(el,target,sfx){let s=0;const d=1500;(function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/d,1);el.textContent=Math.floor(p*target)+sfx;if(p<1)requestAnimationFrame(step)})(performance.now())}
+const so=new IntersectionObserver(e=>{if(e[0].isIntersecting){document.querySelectorAll('.st-n[data-count]').forEach(el=>animN(el,+el.dataset.count,el.dataset.sfx||''));so.disconnect()}},{threshold:.3});
+const statsEl=document.getElementById('stats');if(statsEl)so.observe(statsEl);
+
+/* drag scroll projects */
+const pw=document.getElementById('pw');
+let drag=false,startX,sl;
+pw.addEventListener('mousedown',e=>{drag=true;startX=e.pageX-pw.offsetLeft;sl=pw.scrollLeft;pw.style.cursor='grabbing'});
+pw.addEventListener('mouseleave',()=>{drag=false;pw.style.cursor='grab'});
+pw.addEventListener('mouseup',()=>{drag=false;pw.style.cursor='grab'});
+pw.addEventListener('mousemove',e=>{if(!drag)return;e.preventDefault();pw.scrollLeft=sl-(e.pageX-pw.offsetLeft-startX)*1.2});
+let tX=0,tSL=0;
+pw.addEventListener('touchstart',e=>{tX=e.touches[0].pageX;tSL=pw.scrollLeft},{passive:true});
+pw.addEventListener('touchmove',e=>{pw.scrollLeft=tSL+(tX-e.touches[0].pageX)},{passive:true});
+
+/* faq */
+document.querySelectorAll('.faq-c').forEach(c=>{
+  c.querySelector('.faq-t').addEventListener('click',()=>{
+    const on=c.classList.contains('on');
+    document.querySelectorAll('.faq-c').forEach(x=>{x.classList.remove('on');x.querySelector('.faq-b').style.maxHeight=null});
+    if(!on){c.classList.add('on');c.querySelector('.faq-b').style.maxHeight=c.querySelector('.faq-b').scrollHeight+'px'}
+  });
+});
+
+/* lightbox */
+function openLb(src){document.getElementById('lbImg').src=src;document.getElementById('lb').classList.add('on');document.body.style.overflow='hidden'}
+function closeLb(){document.getElementById('lb').classList.remove('on');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+
+/* form */
+function handleSub(){
+  const b=document.getElementById('subBtn');
+  b.innerHTML='<i class="fa-solid fa-check" style="margin-right:8px"></i>Message Sent!';
+  b.style.background='#2a7a4e';
+  setTimeout(()=>{b.innerHTML='<i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Send Message';b.style.background=''},3500);
+}
+</script>
+</body>
+</html>
